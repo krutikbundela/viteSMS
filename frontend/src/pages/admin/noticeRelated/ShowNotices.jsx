@@ -132,7 +132,7 @@ const ShowNotices = () => {
                   variant="contained"
                   onClick={() => navigate("/Admin/addnotice")}
                   sx={{
-                    width: "10%",
+                    width: "fit-content",
                   }}
                 >
                   Add Notice

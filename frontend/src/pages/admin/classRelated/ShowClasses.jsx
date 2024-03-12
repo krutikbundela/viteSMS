@@ -220,7 +220,7 @@ const ShowClasses = () => {
                 variant="contained"
                 onClick={() => navigate("/Admin/addclass")}
                 sx={{
-                  width: "10%",
+                  width: "fit-content",
                 }}
               >
                 Add Class

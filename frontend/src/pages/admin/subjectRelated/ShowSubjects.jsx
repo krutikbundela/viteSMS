@@ -139,7 +139,7 @@ const ShowSubjects = () => {
                   variant="contained"
                   onClick={() => navigate("/Admin/subjects/chooseclass")}
                   sx={{
-                    width: "10%",
+                    width: "fit-content",
                   }}
                 >
                   Add Subjects

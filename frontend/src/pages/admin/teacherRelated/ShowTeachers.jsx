@@ -58,7 +58,7 @@ const ShowTeachers = () => {
           variant="contained"
           onClick={() => navigate("/Admin/teachers/chooseclass")}
           sx={{
-            width: "10%",
+            width: "fit-content",
           }}
         >
           Add Teacher
