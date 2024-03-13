@@ -13,8 +13,11 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { deleteUser } from "../../../redux/userRelated/userHandle";
-import { getAllSclasses } from "../../../redux/sclassRelated/sclassHandle";
+import {
+  getAllSclasses,
+  deleteSingleClass,
+  deleteAllClasses,
+} from "../../../redux/sclassRelated/sclassHandle";
 import { BlueButton, GreenButton } from "../../../components/buttonStyles";
 import TableTemplate from "../../../components/TableTemplate";
 
@@ -48,15 +51,15 @@ const ShowClasses = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [message, setMessage] = useState("");
 
-  const deleteHandler = (deleteID, address) => {
-    console.log(deleteID);
-    console.log(address);
-    setMessage("Sorry the delete function has been disabled for now.");
-    setShowPopup(true);
-    // dispatch(deleteUser(deleteID, address))
-    //   .then(() => {
-    //     dispatch(getAllSclasses(adminID, "Sclass"));
-    //   })
+  const deleteSingleClassHandler = (deleteID) => {
+    dispatch(deleteSingleClass(deleteID)).then(() => {
+      dispatch(getAllSclasses(adminID, "Sclass"));
+    });
+  };
+  const deleteAllClassHandler = (deleteID) => {
+    dispatch(deleteAllClasses(deleteID)).then(() => {
+      dispatch(getAllSclasses(adminID, "Sclass"));
+    });
   };
 
   const sclassColumns = [{ id: "name", label: "Class Name", minWidth: 170 }];
@@ -87,7 +90,7 @@ const ShowClasses = () => {
     return (
       <ButtonContainer>
         <IconButton
-          onClick={() => deleteHandler(row.id, "Sclass")}
+          onClick={() => deleteSingleClassHandler(row.id)}
           color="secondary"
         >
           <DeleteIcon color="error" />
@@ -166,13 +169,13 @@ const ShowClasses = () => {
     {
       icon: <DeleteIcon color="error" />,
       name: "Delete All Classes",
-      action: () => deleteHandler(adminID, "Sclasses"),
+      action: () => deleteAllClassHandler(adminID, "Sclasses"),
     },
   ];
 
   return (
     <>
-    <Box
+      <Box
         sx={{
           width: "100%",
           height: "100vh",
@@ -202,64 +205,64 @@ const ShowClasses = () => {
             }}
           />
         </Box>
-      {loading ? (
-        <div>Loading...</div>
-      ) : (
-        <>
-          {getresponse ? (
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                flexDirection: "column",
-                marginTop: "16px",
-              }}
-            >
-              <GreenButton
-                variant="contained"
-                onClick={() => navigate("/Admin/addclass")}
+        {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <>
+            {getresponse ? (
+              <Box
                 sx={{
-                  width: "fit-content",
-                }}
-              >
-                Add Class
-              </GreenButton>
-              <Paper
-                sx={{
-                  margin: "50px",
-                  width: "90%",
                   display: "flex",
-                  flexDirection: "column",
                   justifyContent: "center",
                   alignItems: "center",
-                  padding: "20px",
+                  flexDirection: "column",
+                  marginTop: "16px",
                 }}
               >
-                <h3>No Class Added </h3>
-              </Paper>
-            </Box>
-          ) : (
-            <>
-              <Paper sx={{ width: "90%", overflow: "hidden", p: 2, m: 2 }}>
-                {Array.isArray(sclassesList) && sclassesList.length > 0 && (
-                  <TableTemplate
-                    buttonHaver={SclassButtonHaver}
-                    columns={sclassColumns}
-                    rows={sclassRows}
-                  />
-                )}
-              <SpeedDialTemplate actions={actions} />
-              </Paper>
-            </>
-          )}
-        </>
-      )}
-      <Popup
-        message={message}
-        setShowPopup={setShowPopup}
-        showPopup={showPopup}
-      />
+                <GreenButton
+                  variant="contained"
+                  onClick={() => navigate("/Admin/addclass")}
+                  sx={{
+                    width: "fit-content",
+                  }}
+                >
+                  Add Class
+                </GreenButton>
+                <Paper
+                  sx={{
+                    margin: "50px",
+                    width: "90%",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "20px",
+                  }}
+                >
+                  <h3>No Class Added </h3>
+                </Paper>
+              </Box>
+            ) : (
+              <>
+                <Paper sx={{ width: "90%", overflow: "hidden", p: 2, m: 2 }}>
+                  {Array.isArray(sclassesList) && sclassesList.length > 0 && (
+                    <TableTemplate
+                      buttonHaver={SclassButtonHaver}
+                      columns={sclassColumns}
+                      rows={sclassRows}
+                    />
+                  )}
+                  <SpeedDialTemplate actions={actions} />
+                </Paper>
+              </>
+            )}
+          </>
+        )}
+        <Popup
+          message={message}
+          setShowPopup={setShowPopup}
+          showPopup={showPopup}
+        />
       </Box>
     </>
   );

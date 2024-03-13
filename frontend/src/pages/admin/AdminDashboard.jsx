@@ -121,13 +121,11 @@ const AdminDashboard = () => {
                 path="/Admin/subjects/chooseclass"
                 element={<ChooseClass situation="Subject" />}
               />
-
               <Route path="/Admin/addsubject/:id" element={<SubjectForm />} />
               <Route
                 path="/Admin/class/subject/:classID/:subjectID"
                 element={<ViewSubject />}
               />
-
               <Route
                 path="/Admin/subject/student/attendance/:studentID/:subjectID"
                 element={<StudentAttendance situation="Subject" />}

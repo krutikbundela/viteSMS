@@ -28,6 +28,35 @@ export const getAllSclasses = (id, address) => async (dispatch) => {
         dispatch(getError(error));
     }
 }
+export const deleteSingleClass = (id) => async (dispatch) => {
+    dispatch(getRequest());
+    try {
+        const result = await axios.delete(`${REACT_APP_BASE_URL}/Sclass/${id}`);
+        if (result.data.message) {
+            dispatch(getFailedTwo(result.data.message));
+        } else {
+            dispatch(getSuccess(result.data));
+        }
+    } catch (error) {
+        dispatch(getError(error));
+    }
+}
+
+export const deleteAllClasses = (id) => async (dispatch) => {
+    dispatch(getRequest());
+    try {
+        const result = await axios.delete(`${REACT_APP_BASE_URL}/Sclasses/${id}`);
+        if (result.data.message) {
+            dispatch(getFailedTwo(result.data.message));
+        } else {
+            dispatch(getSuccess(result.data));
+        }
+    } catch (error) {
+        dispatch(getError(error));
+    }
+}
+
+
 
 export const getClassStudents = (id) => async (dispatch) => {
     dispatch(getRequest());
