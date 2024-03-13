@@ -6,7 +6,7 @@ const { adminRegister, adminLogIn, getAdminDetail} = require('../controllers/adm
 
 const { sclassCreate, sclassList, deleteSclass, deleteSclasses, getSclassDetail, getSclassStudents } = require('../controllers/class-controller.js');
 const { complainCreate, complainList } = require('../controllers/complain-controller.js');
-const { noticeCreate, noticeList, deleteNotices, deleteNotice, updateNotice } = require('../controllers/notice-controller.js');
+const { noticeCreate, noticeList, deleteAllNotices, deleteNotice, updateNotice, getSingleNotice } = require('../controllers/notice-controller.js');
 const {
     studentRegister,
     studentLogIn,
@@ -77,13 +77,12 @@ router.post('/TeacherAttendance/:id', teacherAttendance)
 // Notice
 
 router.post('/NoticeCreate', noticeCreate);
+router.get("/singlenotice/:id", getSingleNotice);
+router.put("/updatenotice/:id", updateNotice); 
 
 router.get('/NoticeList/:id', noticeList);
-
-router.delete("/Notices/:id", deleteNotices)
+router.delete("/Notices/:userid", deleteAllNotices)
 router.delete("/Notice/:id", deleteNotice)
-
-router.put("/Notice/:id", updateNotice)
 
 // Complain
 

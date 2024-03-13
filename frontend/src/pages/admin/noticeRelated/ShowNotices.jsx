@@ -7,11 +7,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import {
   getAllNotices,
   deleteNotice,
+  deleteAllNotice,
 } from "../../../redux/noticeRelated/noticeHandle";
 import { deleteUser } from "../../../redux/userRelated/userHandle";
 import TableTemplate from "../../../components/TableTemplate";
 import { GreenButton } from "../../../components/buttonStyles";
 import SpeedDialTemplate from "../../../components/SpeedDialTemplate";
+import EditNoteIcon from "@mui/icons-material/EditNote";
 
 const ShowNotices = () => {
   const navigate = useNavigate();
@@ -31,6 +33,12 @@ const ShowNotices = () => {
 
   const deleteHandler = (deleteID, address) => {
     dispatch(deleteNotice(deleteID, address)).then(() => {
+      dispatch(getAllNotices(currentUser._id, "Notice"));
+    });
+  };
+
+  const deleteAllNoticeHandler = (userId, address) => {
+    dispatch(deleteAllNotice(userId, address)).then(() => {
       dispatch(getAllNotices(currentUser._id, "Notice"));
     });
   };
@@ -62,6 +70,9 @@ const ShowNotices = () => {
     console.log("NoticeButtonHaver ~ row:", row.id);
     return (
       <>
+        <IconButton onClick={() => navigate(`/Admin/editnotice/${row.id}`)}>
+          <EditNoteIcon color="success" />
+        </IconButton>
         <IconButton onClick={() => deleteHandler(row.id, "Notice")}>
           <DeleteIcon color="error" />
         </IconButton>
@@ -78,7 +89,7 @@ const ShowNotices = () => {
     {
       icon: <DeleteIcon color="error" />,
       name: "Delete All Notices",
-      action: () => deleteHandler(currentUser._id, "Notices"),
+      action: () => deleteAllNoticeHandler(currentUser._id, "Notices"),
     },
   ];
 
