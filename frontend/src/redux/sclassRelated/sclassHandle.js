@@ -103,21 +103,6 @@ export const getSubjectList = (id, address) => async (dispatch) => {
   }
 };
 
-export const singleSubjectDelete = (id) => async(dispatch) =>{
-     dispatch(getRequest());
-
-     try {
-       const result = await axios.delete(`${REACT_APP_BASE_URL}/Subject/${id}`);
-       if (result.data.message) {
-         dispatch(getFailed(result.data.message));
-       } else {
-         dispatch(getSubjectsSuccess(result.data));
-       }
-     } catch (error) {
-       dispatch(getError(error));
-     }
-}
-
 export const getTeacherList = (id) => async (dispatch) => {
   dispatch(getRequest());
 

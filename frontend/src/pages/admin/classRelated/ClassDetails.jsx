@@ -6,7 +6,6 @@ import {
   getClassStudents,
   getSubjectList,
   getTeacherList,
-  singleSubjectDelete,
 } from "../../../redux/sclassRelated/sclassHandle";
 import { deleteUser } from "../../../redux/userRelated/userHandle";
 import {
@@ -40,6 +39,7 @@ import styled from "styled-components";
 import Students from "../../../assets/img1.png";
 import Classes from "../../../assets/img2.png";
 import Teachers from "../../../assets/img3.png";
+import { deleteSubject } from "../../../redux/subjectRelated/subjectHandle";
 const ClassDetails = () => {
   const params = useParams();
   const navigate = useNavigate();
@@ -85,11 +85,8 @@ const ClassDetails = () => {
   };
 
   const singleSubjectDeleteHandler = (id) => {
-    dispatch(singleSubjectDelete(id)).then(() => {
-      dispatch(getClassDetails(classID, "Sclass"));
+    dispatch(deleteSubject(id)).then(() => {
       dispatch(getSubjectList(classID, "ClassSubjects"));
-      dispatch(getTeacherList(classID));
-      dispatch(getClassStudents(classID));
     });
   };
 
