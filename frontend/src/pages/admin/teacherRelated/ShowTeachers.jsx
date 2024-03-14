@@ -47,35 +47,66 @@ const ShowTeachers = () => {
     return (
       <Box
         sx={{
+          width: "100%",
+          height: "100vh",
           display: "flex",
-          justifyContent: "center",
+          justifyContent: "flex-start",
           alignItems: "center",
           flexDirection: "column",
-          marginTop: "16px",
         }}
       >
-        <GreenButton
-          variant="contained"
-          onClick={() => navigate("/Admin/teachers/chooseclass")}
+        <Box
           sx={{
-            width: "fit-content",
-          }}
-        >
-          Add Teacher
-        </GreenButton>
-        <Paper
-          sx={{
-            margin: "50px",
-            width: "90%",
+            m: 2,
             display: "flex",
-            flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            padding: "20px",
+            flexDirection: "column",
           }}
         >
-          <h3>No Teacher Added </h3>
-        </Paper>
+          <Typography variant="h2">Teachers</Typography>
+          <Divider
+            variant="middle"
+            orientation="horizontal"
+            sx={{
+              width: "90%",
+              borderBottomWidth: "5px",
+              color: "black",
+            }}
+          />
+        </Box>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+            marginTop: "16px",
+          }}
+        >
+          <GreenButton
+            variant="contained"
+            onClick={() => navigate("/Admin/teachers/chooseclass")}
+            sx={{
+              width: "fit-content",
+            }}
+          >
+            Add Teacher
+          </GreenButton>
+          <Paper
+            sx={{
+              margin: "50px",
+              width: "90%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "20px",
+            }}
+          >
+            <h3>No Teacher Added </h3>
+          </Paper>
+        </Box>
       </Box>
     );
   } else if (error) {
@@ -155,7 +186,7 @@ const ShowTeachers = () => {
           />
         </Box>
 
-        <Paper sx={{ width: "90%", overflow: "hidden", p: 2, m: 2 }}>
+        {/* <Paper sx={{ width: "90%", overflow: "hidden", p: 2, m: 2 }}>
           <TableContainer>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
@@ -259,7 +290,7 @@ const ShowTeachers = () => {
             setShowPopup={setShowPopup}
             showPopup={showPopup}
           />
-        </Paper>
+        </Paper> */}
       </Box>
     </>
   );
