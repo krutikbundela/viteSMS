@@ -49,35 +49,69 @@ const ChooseSubject = ({ situation }) => {
       <div>
         <Box
           sx={{
+            width: "100%",
+            height: "100vh",
             display: "flex",
-            justifyContent: "center",
+            justifyContent: "flex-start",
             alignItems: "center",
             flexDirection: "column",
-            marginTop: "16px",
           }}
         >
-          <GreenButton
-            variant="contained"
-            onClick={() => navigate("/Admin/addsubject/" + classID)}
+          <Box
             sx={{
-              width: "fit-content",
-            }}
-          >
-            Add Subjects
-          </GreenButton>
-          <Paper
-            sx={{
-              margin: "50px",
-              width: "90%",
+              m: 2,
               display: "flex",
-              flexDirection: "column",
               justifyContent: "center",
               alignItems: "center",
-              padding: "20px",
+              flexDirection: "column",
             }}
           >
-            <h4>Sorry all subjects have teachers assigned already </h4>
-          </Paper>
+            <Typography variant="h2">Choose A Subject</Typography>
+            <Divider
+              variant="middle"
+              orientation="horizontal"
+              sx={{
+                width: "90%",
+                borderBottomWidth: "5px",
+                color: "black",
+              }}
+            />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+              marginTop: "16px",
+            }}
+          >
+            <GreenButton
+              variant="contained"
+              onClick={() => navigate("/Admin/addsubject/" + classID)}
+              sx={{
+                width: "fit-content",
+              }}
+            >
+              Add Subjects
+            </GreenButton>
+            <Paper
+              sx={{
+                margin: "50px",
+                width: "90%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: "20px",
+              }}
+            >
+              <Typography align="center" sx={{ p: 1 }}>
+                Sorry,the subjects are not assigned to this class <br /> OR
+                <br /> all subjects have teachers assigned already{" "}
+              </Typography>
+            </Paper>
+          </Box>
         </Box>
       </div>
     );

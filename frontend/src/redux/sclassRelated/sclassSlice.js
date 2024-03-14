@@ -6,6 +6,7 @@ const initialState = {
     sclassDetails: [],
     subjectsList: [],
     subjectDetails: [],
+    teacherList: [],
     loading: false,
     subloading: false,
     error: null,
@@ -37,6 +38,12 @@ const sclassSlice = createSlice({
         },
         getSubjectsSuccess: (state, action) => {
             state.subjectsList = action.payload;
+            state.loading = false;
+            state.error = null;
+            state.response = null;
+        },
+        getTeacherSuccess: (state, action) => {
+            state.teacherList = action.payload;
             state.loading = false;
             state.error = null;
             state.response = null;
@@ -76,17 +83,18 @@ const sclassSlice = createSlice({
 });
 
 export const {
-    getRequest,
-    getSuccess,
-    getFailed,
-    getError,
-    getStudentsSuccess,
-    getSubjectsSuccess,
-    detailsSuccess,
-    getFailedTwo,
-    resetSubjects,
-    getSubDetailsSuccess,
-    getSubDetailsRequest
+  getRequest,
+  getSuccess,
+  getFailed,
+  getError,
+  getStudentsSuccess,
+  getSubjectsSuccess,
+  detailsSuccess,
+  getFailedTwo,
+  resetSubjects,
+  getSubDetailsSuccess,
+  getSubDetailsRequest,
+  getTeacherSuccess,
 } = sclassSlice.actions;
 
 export const sclassReducer = sclassSlice.reducer;

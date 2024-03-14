@@ -5,6 +5,7 @@ import {
   getClassDetails,
   getClassStudents,
   getSubjectList,
+  getTeacherList,
 } from "../../../redux/sclassRelated/sclassHandle";
 import { deleteUser } from "../../../redux/userRelated/userHandle";
 import {
@@ -50,13 +51,16 @@ const ClassDetails = () => {
     error,
     response,
     getresponse,
+    teacherList,
   } = useSelector((state) => state.sclass);
+  console.log("ClassDetails ~ teacherList:", teacherList);
 
   const classID = params.id;
 
   useEffect(() => {
     dispatch(getClassDetails(classID, "Sclass"));
     dispatch(getSubjectList(classID, "ClassSubjects"));
+    dispatch(getTeacherList(classID));
     dispatch(getClassStudents(classID));
   }, [dispatch, classID]);
 
@@ -105,11 +109,15 @@ const ClassDetails = () => {
   const SubjectsButtonHaver = ({ row }) => {
     return (
       <>
-        <IconButton  sx={{mr:2,}} onClick={() => deleteHandler(row.id, "Subject")}>
+        <IconButton
+          sx={{ mr: 2 }}
+          onClick={() => deleteHandler(row.id, "Subject")}
+        >
           <DeleteIcon color="error" />
         </IconButton>
         <BlueButton
-          variant="contained" sx={{mr:2,}}
+          variant="contained"
+          sx={{ mr: 2 }}
           onClick={() => {
             navigate(`/Admin/class/subject/${classID}/${row.id}`);
           }}
@@ -357,17 +365,19 @@ const ClassDetails = () => {
       </>
     );
   };
-  
+
   const teacherColumns = [
     { id: "name", label: "Name", minWidth: 170 },
-    { id: "rollNum", label: "Roll Number", minWidth: 100 },
+    { id: "email", label: "Email", minWidth: 170 },
+    { id: "subject", label: "Subject", minWidth: 100 },
   ];
 
-  const teacherRows = sclassStudents.map((student) => {
+  const teacherRows = teacherList.map((teacher) => {
     return {
-      name: student.name,
-      rollNum: student.rollNum,
-      id: student._id,
+      name: teacher.name,
+      email: teacher.email,
+      subject: teacher.teachSubject.subName,
+      id: teacher._id,
     };
   });
 
@@ -376,26 +386,19 @@ const ClassDetails = () => {
       <>
         <IconButton
           sx={{ mr: 2 }}
-          onClick={() => deleteHandler(row.id, "Student")}
+          onClick={() => deleteHandler(row.id, "Subject")}
         >
-          <PersonRemoveIcon color="error" />
+          <DeleteIcon color="error" />
         </IconButton>
         <BlueButton
-          sx={{ mr: 2 }}
           variant="contained"
-          onClick={() => navigate("/Admin/students/student/" + row.id)}
+          sx={{ mr: 2 }}
+          onClick={() => {
+            navigate(`/Admin/class/subject/${classID}/${row.id}`);
+          }}
         >
           View
         </BlueButton>
-        <PurpleButton
-          sx={{ mr: 2 }}
-          variant="contained"
-          onClick={() =>
-            navigate("/Admin/students/student/attendance/" + row.id)
-          }
-        >
-          Attendance
-        </PurpleButton>
       </>
     );
   };
@@ -418,6 +421,7 @@ const ClassDetails = () => {
       <>
         <Box
           sx={{
+            zIndex: 0,
             width: "100%",
             height: "100vh",
             display: "flex",
@@ -446,7 +450,7 @@ const ClassDetails = () => {
               }}
             />
           </Box>
-          {getresponse ? (
+          {response ? (
             <>
               <Box
                 sx={{
@@ -501,6 +505,7 @@ const ClassDetails = () => {
   };
 
   const ClassDetailsSection = () => {
+    const numberOfTeacher = teacherList.length;
     const numberOfSubjects = subjectsList.length;
     const numberOfStudents = sclassStudents.length;
 
@@ -564,7 +569,7 @@ const ClassDetails = () => {
                 <StyledPaper>
                   <img src={Teachers} alt="Classes" />
                   <Title>Total Teachers</Title>
-                  {/* <Data start={0} end={numberOfTeachers} duration={5} /> */}
+                  <Data start={0} end={numberOfTeacher} duration={5} />
                 </StyledPaper>
               </Grid>
             </Box>

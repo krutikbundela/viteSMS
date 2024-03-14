@@ -186,7 +186,7 @@ const ShowTeachers = () => {
           />
         </Box>
 
-        {/* <Paper sx={{ width: "90%", overflow: "hidden", p: 2, m: 2 }}>
+        <Paper sx={{ width: "90%", overflow: "hidden", p: 2, m: 2 }}>
           <TableContainer>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
@@ -290,7 +290,7 @@ const ShowTeachers = () => {
             setShowPopup={setShowPopup}
             showPopup={showPopup}
           />
-        </Paper> */}
+        </Paper>
       </Box>
     </>
   );
