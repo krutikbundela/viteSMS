@@ -10,6 +10,7 @@ import TableTemplate from "../../../components/TableTemplate";
 import { BlueButton, GreenButton } from "../../../components/buttonStyles";
 import SpeedDialTemplate from "../../../components/SpeedDialTemplate";
 import Popup from "../../../components/Popup";
+import { deleteAllSubject, deleteSubject } from "../../../redux/subjectRelated/subjectHandle";
 
 const ShowSubjects = () => {
   const navigate = useNavigate();
@@ -30,16 +31,15 @@ const ShowSubjects = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [message, setMessage] = useState("");
 
-  const deleteHandler = (deleteID, address) => {
-    console.log(deleteID);
-    console.log(address);
-    setMessage("Sorry the delete function has been disabled for now.");
-    setShowPopup(true);
-
-    // dispatch(deleteUser(deleteID, address))
-    //     .then(() => {
-    //         dispatch(getSubjectList(currentUser._id, "AllSubjects"));
-    //     })
+  const singleSubjectDeleteHandler = (deleteID) => {
+    dispatch(deleteSubject(deleteID)).then(() => {
+      dispatch(getSubjectList(currentUser._id, "AllSubjects"));
+    });
+  };
+  const AllSubjectDeleteHandler = (deleteID) => {
+    dispatch(deleteAllSubject(currentUser._id, "Subjects")).then(() => {
+      dispatch(getSubjectList(currentUser._id, "AllSubjects"));
+    });
   };
 
   const subjectColumns = [
@@ -61,7 +61,9 @@ const ShowSubjects = () => {
   const SubjectsButtonHaver = ({ row }) => {
     return (
       <>
-        <IconButton onClick={() => deleteHandler(row.id, "Subject")}>
+        <IconButton
+          onClick={() => singleSubjectDeleteHandler(row.id)}
+        >
           <DeleteIcon color="error" />
         </IconButton>
         <BlueButton
@@ -85,7 +87,7 @@ const ShowSubjects = () => {
     {
       icon: <DeleteIcon color="error" />,
       name: "Delete All Subjects",
-      action: () => deleteHandler(currentUser._id, "Subjects"),
+      action: () => AllSubjectDeleteHandler(),
     },
   ];
 

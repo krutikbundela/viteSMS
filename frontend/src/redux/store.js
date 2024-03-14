@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { userReducer } from './userRelated/userSlice';
 import { studentReducer } from './studentRelated/studentSlice';
+import { subjectReducer } from "./subjectRelated/subjectSlice";
 import { noticeReducer } from './noticeRelated/noticeSlice';
 import { sclassReducer } from './sclassRelated/sclassSlice';
 import { teacherReducer } from './teacherRelated/teacherSlice';
@@ -10,6 +11,7 @@ const store = configureStore({
     reducer: {
         user: userReducer,
         student: studentReducer,
+        subject: subjectReducer,
         teacher: teacherReducer,
         notice: noticeReducer,
         complain: complainReducer,

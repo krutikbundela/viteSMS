@@ -6,6 +6,7 @@ import {
   getClassStudents,
   getSubjectList,
   getTeacherList,
+  singleSubjectDelete,
 } from "../../../redux/sclassRelated/sclassHandle";
 import { deleteUser } from "../../../redux/userRelated/userHandle";
 import {
@@ -53,7 +54,6 @@ const ClassDetails = () => {
     getresponse,
     teacherList,
   } = useSelector((state) => state.sclass);
-  console.log("ClassDetails ~ teacherList:", teacherList);
 
   const classID = params.id;
 
@@ -82,13 +82,18 @@ const ClassDetails = () => {
     console.log(address);
     setMessage("Sorry the delete function has been disabled for now.");
     setShowPopup(true);
-    // dispatch(deleteUser(deleteID, address))
-    //     .then(() => {
-    //         dispatch(getClassStudents(classID));
-    //         dispatch(resetSubjects())
-    //         dispatch(getSubjectList(classID, "ClassSubjects"))
-    //     })
   };
+
+  const singleSubjectDeleteHandler = (id) => {
+    dispatch(singleSubjectDelete(id)).then(() => {
+      dispatch(getClassDetails(classID, "Sclass"));
+      dispatch(getSubjectList(classID, "ClassSubjects"));
+      dispatch(getTeacherList(classID));
+      dispatch(getClassStudents(classID));
+    });
+  };
+
+  const singleStudentDeleteHandler = () => {};
 
   const subjectColumns = [
     { id: "name", label: "Subject Name", minWidth: 170 },
@@ -100,9 +105,9 @@ const ClassDetails = () => {
     subjectsList.length > 0 &&
     subjectsList.map((subject) => {
       return {
-        name: subject.subName,
-        code: subject.subCode,
-        id: subject._id,
+        name: subject?.subName,
+        code: subject?.subCode,
+        id: subject?._id,
       };
     });
 
@@ -111,7 +116,7 @@ const ClassDetails = () => {
       <>
         <IconButton
           sx={{ mr: 2 }}
-          onClick={() => deleteHandler(row.id, "Subject")}
+          onClick={() => singleSubjectDeleteHandler(row.id)}
         >
           <DeleteIcon color="error" />
         </IconButton>
@@ -174,7 +179,7 @@ const ClassDetails = () => {
               }}
             />
           </Box>
-          {response ? (
+          {subjectsList.length === 0 ? (
             <Box
               sx={{
                 display: "flex",
@@ -223,6 +228,7 @@ const ClassDetails = () => {
       </>
     );
   };
+  console.log("ClassSubjectsSection ~ subjectsList:", subjectsList);
 
   const studentColumns = [
     { id: "name", label: "Name", minWidth: 170 },
@@ -242,7 +248,7 @@ const ClassDetails = () => {
       <>
         <IconButton
           sx={{ mr: 2 }}
-          onClick={() => deleteHandler(row.id, "Student")}
+          onClick={() => singleStudentDeleteHandler(row.id, "Student")}
         >
           <PersonRemoveIcon color="error" />
         </IconButton>
@@ -376,7 +382,7 @@ const ClassDetails = () => {
     return {
       name: teacher.name,
       email: teacher.email,
-      subject: teacher.teachSubject.subName,
+      subject: teacher.teachSubject?.subName,
       id: teacher._id,
     };
   });
