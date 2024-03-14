@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
+  deleteAllSubjectbyClassId,
   getClassDetails,
   getClassStudents,
   getSubjectList,
@@ -77,20 +78,19 @@ const ClassDetails = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [message, setMessage] = useState("");
 
-  const deleteHandler = (deleteID, address) => {
-    console.log(deleteID);
-    console.log(address);
-    setMessage("Sorry the delete function has been disabled for now.");
-    setShowPopup(true);
-  };
 
   const singleSubjectDeleteHandler = (id) => {
     dispatch(deleteSubject(id)).then(() => {
       dispatch(getSubjectList(classID, "ClassSubjects"));
     });
   };
+  
+  const deleteAllSubjectHandler = () => {
+    dispatch(deleteAllSubjectbyClassId(classID)).then(() => {
+      dispatch(getSubjectList(classID, "ClassSubjects"));
+    });
+  };
 
-  const singleStudentDeleteHandler = () => {};
 
   const subjectColumns = [
     { id: "name", label: "Subject Name", minWidth: 170 },
@@ -139,7 +139,7 @@ const ClassDetails = () => {
     {
       icon: <DeleteIcon color="error" />,
       name: "Delete All Subjects",
-      action: () => deleteHandler(classID, "SubjectsClass"),
+      action: () => deleteAllSubjectHandler(classID, "SubjectsClass"),
     },
   ];
 
@@ -225,7 +225,6 @@ const ClassDetails = () => {
       </>
     );
   };
-  console.log("ClassSubjectsSection ~ subjectsList:", subjectsList);
 
   const studentColumns = [
     { id: "name", label: "Name", minWidth: 170 },
