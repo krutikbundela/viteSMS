@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
+  deleteAllStudentbyClassId,
   deleteAllSubjectbyClassId,
   getClassDetails,
   getClassStudents,
@@ -41,6 +42,7 @@ import Students from "../../../assets/img1.png";
 import Classes from "../../../assets/img2.png";
 import Teachers from "../../../assets/img3.png";
 import { deleteSubject } from "../../../redux/subjectRelated/subjectHandle";
+import { deleteStudent } from "../../../redux/studentRelated/studentHandle";
 const ClassDetails = () => {
   const params = useParams();
   const navigate = useNavigate();
@@ -90,8 +92,18 @@ const ClassDetails = () => {
       dispatch(getSubjectList(classID, "ClassSubjects"));
     });
   };
-
-
+  
+  const singleStudentDeleteHandler = (id) => {
+    dispatch(deleteStudent(id)).then(() => {
+      dispatch(getClassStudents(classID));
+    });
+  };
+  
+  const deleteAllStudentHandler = () => {
+    dispatch(deleteAllStudentbyClassId(classID)).then(() => {
+     dispatch(getClassStudents(classID));
+    });
+  };
   const subjectColumns = [
     { id: "name", label: "Subject Name", minWidth: 170 },
     { id: "code", label: "Subject Code", minWidth: 100 },
@@ -231,7 +243,7 @@ const ClassDetails = () => {
     { id: "rollNum", label: "Roll Number", minWidth: 100 },
   ];
 
-  const studentRows = sclassStudents.map((student) => {
+  const studentRows = sclassStudents && sclassStudents.map((student) => {
     return {
       name: student.name,
       rollNum: student.rollNum,
@@ -244,7 +256,7 @@ const ClassDetails = () => {
       <>
         <IconButton
           sx={{ mr: 2 }}
-          onClick={() => singleStudentDeleteHandler(row.id, "Student")}
+          onClick={() => singleStudentDeleteHandler(row.id)}
         >
           <PersonRemoveIcon color="error" />
         </IconButton>
@@ -277,7 +289,7 @@ const ClassDetails = () => {
     {
       icon: <PersonRemoveIcon color="error" />,
       name: "Delete All Students",
-      action: () => deleteHandler(classID, "StudentsClass"),
+      action: () => deleteAllStudentHandler(),
     },
   ];
 
