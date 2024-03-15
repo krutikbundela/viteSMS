@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getAllStudents } from "../../../redux/studentRelated/studentHandle";
+import {
+  deleteAllStudent,
+  deleteStudent,
+  getAllStudents,
+} from "../../../redux/studentRelated/studentHandle";
 import { deleteUser } from "../../../redux/userRelated/userHandle";
 import { Paper, Box, IconButton, Typography, Divider } from "@mui/material";
 import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
@@ -45,16 +49,15 @@ const ShowStudents = () => {
   const [showPopup, setShowPopup] = React.useState(false);
   const [message, setMessage] = React.useState("");
 
-  const deleteHandler = (deleteID, address) => {
-    console.log(deleteID);
-    console.log(address);
-    setMessage("Sorry the delete function has been disabled for now.");
-    setShowPopup(true);
-
-    // dispatch(deleteUser(deleteID, address))
-    //     .then(() => {
-    //         dispatch(getAllStudents(currentUser._id));
-    //     })
+  const deleteSingleHandler = (deleteID) => {
+    dispatch(deleteStudent(deleteID)).then(() => {
+      dispatch(getAllStudents(currentUser._id));
+    });
+  };
+  const deleteAllStudentsHandler = (deleteID) => {
+    dispatch(deleteAllStudent(deleteID)).then(() => {
+      dispatch(getAllStudents(currentUser._id));
+    });
   };
 
   const studentColumns = [
@@ -116,10 +119,11 @@ const ShowStudents = () => {
     };
     return (
       <>
-        <IconButton onClick={() => deleteHandler(row.id, "Student")}>
+        <IconButton sx={{ mr: 2 }} onClick={() => deleteSingleHandler(row.id)}>
           <PersonRemoveIcon color="error" />
         </IconButton>
         <BlueButton
+          sx={{ mr: 2 }}
           variant="contained"
           onClick={() => navigate("/Admin/students/student/" + row.id)}
         >
@@ -127,11 +131,14 @@ const ShowStudents = () => {
         </BlueButton>
         <React.Fragment>
           <ButtonGroup
+            sx={{ mr: 2 }}
             variant="contained"
             ref={anchorRef}
             aria-label="split button"
           >
-            <Button onClick={handleClick}>{options[selectedIndex]}</Button>
+            <Button sx={{ mr: 2 }} onClick={handleClick}>
+              {options[selectedIndex]}
+            </Button>
             <BlackButton
               size="small"
               aria-controls={open ? "split-button-menu" : undefined}
@@ -194,7 +201,7 @@ const ShowStudents = () => {
     {
       icon: <PersonRemoveIcon color="error" />,
       name: "Delete All Students",
-      action: () => deleteHandler(currentUser._id, "Students"),
+      action: () => deleteAllStudentsHandler(currentUser._id),
     },
   ];
 
