@@ -158,7 +158,7 @@ const deleteTeachers = async (req, res) => {
 const deleteTeachersByClass = async (req, res) => {
   try {
     const deletionResult = await Teacher.deleteMany({
-      sclassName: req.params.id,
+      teachSclass: req.params.id,
     });
 
     const deletedCount = deletionResult.deletedCount || 0;
@@ -168,7 +168,7 @@ const deleteTeachersByClass = async (req, res) => {
       return;
     }
 
-    const deletedTeachers = await Teacher.find({ sclassName: req.params.id });
+    const deletedTeachers = await Teacher.find({ teachSclass: req.params.id });
 
     await Subject.updateMany(
       {

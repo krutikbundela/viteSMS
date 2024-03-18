@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   deleteAllStudentbyClassId,
   deleteAllSubjectbyClassId,
+  deleteAllTeacherbyClassId,
   getClassDetails,
   getClassStudents,
   getSubjectList,
@@ -43,6 +44,7 @@ import Classes from "../../../assets/img2.png";
 import Teachers from "../../../assets/img3.png";
 import { deleteSubject } from "../../../redux/subjectRelated/subjectHandle";
 import { deleteStudent } from "../../../redux/studentRelated/studentHandle";
+import { deleteTeacher } from "../../../redux/teacherRelated/teacherHandle";
 const ClassDetails = () => {
   const params = useParams();
   const navigate = useNavigate();
@@ -56,6 +58,7 @@ const ClassDetails = () => {
     response,
     getresponse,
     teacherList,
+    getTeacherResponse,
   } = useSelector((state) => state.sclass);
 
   const classID = params.id;
@@ -80,28 +83,39 @@ const ClassDetails = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [message, setMessage] = useState("");
 
-
   const singleSubjectDeleteHandler = (id) => {
     dispatch(deleteSubject(id)).then(() => {
       dispatch(getSubjectList(classID, "ClassSubjects"));
     });
   };
-  
+
   const deleteAllSubjectHandler = () => {
     dispatch(deleteAllSubjectbyClassId(classID)).then(() => {
       dispatch(getSubjectList(classID, "ClassSubjects"));
     });
   };
-  
+
   const singleStudentDeleteHandler = (id) => {
     dispatch(deleteStudent(id)).then(() => {
       dispatch(getClassStudents(classID));
     });
   };
-  
+
   const deleteAllStudentHandler = () => {
     dispatch(deleteAllStudentbyClassId(classID)).then(() => {
-     dispatch(getClassStudents(classID));
+      dispatch(getClassStudents(classID));
+    });
+  };
+
+  const singleTeacherDeleteHandler = (id) => {
+    dispatch(deleteTeacher(id)).then(() => {
+      dispatch(getTeacherList(classID));
+    });
+  };
+
+  const deleteAllTeacherHandler = () => {
+    dispatch(deleteAllTeacherbyClassId(classID)).then(() => {
+      dispatch(getTeacherList(classID));
     });
   };
   const subjectColumns = [
@@ -110,7 +124,7 @@ const ClassDetails = () => {
   ];
 
   const subjectRows =
-    subjectsList &&
+    Array.isArray(subjectsList) &&
     subjectsList.length > 0 &&
     subjectsList.map((subject) => {
       return {
@@ -243,13 +257,15 @@ const ClassDetails = () => {
     { id: "rollNum", label: "Roll Number", minWidth: 100 },
   ];
 
-  const studentRows = sclassStudents && sclassStudents.map((student) => {
-    return {
-      name: student.name,
-      rollNum: student.rollNum,
-      id: student._id,
-    };
-  });
+  const studentRows =
+    Array.isArray(sclassStudents) &&
+    sclassStudents.map((student) => {
+      return {
+        name: student.name,
+        rollNum: student.rollNum,
+        id: student._id,
+      };
+    });
 
   const StudentsButtonHaver = ({ row }) => {
     return (
@@ -386,21 +402,24 @@ const ClassDetails = () => {
     { id: "subject", label: "Subject", minWidth: 100 },
   ];
 
-  const teacherRows = teacherList.map((teacher) => {
-    return {
-      name: teacher.name,
-      email: teacher.email,
-      subject: teacher.teachSubject?.subName,
-      id: teacher._id,
-    };
-  });
+  const teacherRows =
+    Array.isArray(teacherList) &&
+    teacherList.length > 0 &&
+    teacherList.map((teacher) => {
+      return {
+        name: teacher.name,
+        email: teacher.email,
+        subject: teacher.teachSubject?.subName,
+        id: teacher._id,
+      };
+    });
 
   const TeacherButtonHaver = ({ row }) => {
     return (
       <>
         <IconButton
           sx={{ mr: 2 }}
-          onClick={() => deleteHandler(row.id, "Subject")}
+          onClick={() => singleTeacherDeleteHandler(row.id)}
         >
           <DeleteIcon color="error" />
         </IconButton>
@@ -408,7 +427,7 @@ const ClassDetails = () => {
           variant="contained"
           sx={{ mr: 2 }}
           onClick={() => {
-            navigate(`/Admin/class/subject/${classID}/${row.id}`);
+            navigate(`/Admin/teachers/teacher/${row.id}`);
           }}
         >
           View
@@ -420,13 +439,13 @@ const ClassDetails = () => {
   const teacherActions = [
     {
       icon: <PersonAddAlt1Icon color="primary" />,
-      name: "Add New Student",
-      action: () => navigate("/Admin/class/addstudents/" + classID),
+      name: "Add New Teacher",
+      action: () => navigate("/Admin/teachers/choosesubject/" + classID),
     },
     {
       icon: <PersonRemoveIcon color="error" />,
-      name: "Delete All Students",
-      action: () => deleteHandler(classID, "StudentsClass"),
+      name: "Delete All Teachers",
+      action: () => deleteAllTeacherHandler(),
     },
   ];
 
@@ -464,7 +483,7 @@ const ClassDetails = () => {
               }}
             />
           </Box>
-          {response ? (
+          {getTeacherResponse ? (
             <>
               <Box
                 sx={{
@@ -478,7 +497,7 @@ const ClassDetails = () => {
                 <GreenButton
                   variant="contained"
                   onClick={() =>
-                    navigate("/Admin/class/addstudents/" + classID)
+                    navigate("/Admin/teachers/addteacher/" + classID)
                   }
                   sx={{
                     width: "fit-content",
@@ -504,11 +523,13 @@ const ClassDetails = () => {
           ) : (
             <>
               <Paper sx={{ width: "100%", overflow: "hidden", p: 2, m: 2 }}>
-                <TableTemplate
-                  buttonHaver={TeacherButtonHaver}
-                  columns={teacherColumns}
-                  rows={teacherRows}
-                />
+                {Array.isArray(teacherList) && teacherList.length > 0 && (
+                  <TableTemplate
+                    buttonHaver={TeacherButtonHaver}
+                    columns={teacherColumns}
+                    rows={teacherRows}
+                  />
+                )}
                 <SpeedDialTemplate actions={teacherActions} />
               </Paper>
             </>
@@ -614,12 +635,24 @@ const ClassDetails = () => {
                 </Box>
               )}
               {response && (
+                  <Box sx={{ marginLeft: "10px" }}>
+                    <GreenButton
+                      variant="contained"
+                      onClick={() => navigate("/Admin/addsubject/" + classID)}
+                    >
+                      Add Subjects
+                    </GreenButton>
+                  </Box>
+              )}
+              {getTeacherResponse && (
                 <Box sx={{ marginLeft: "10px" }}>
                   <GreenButton
                     variant="contained"
-                    onClick={() => navigate("/Admin/addsubject/" + classID)}
+                    onClick={() =>
+                      navigate("/Admin/teachers/choosesubject/" + classID)
+                    }
                   >
-                    Add Subjects
+                    Add Teachers
                   </GreenButton>
                 </Box>
               )}

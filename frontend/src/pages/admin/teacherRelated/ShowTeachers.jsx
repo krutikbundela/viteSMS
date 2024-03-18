@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getAllTeachers } from "../../../redux/teacherRelated/teacherHandle";
+import { deleteAllTeacher, deleteTeacher, getAllTeachers } from "../../../redux/teacherRelated/teacherHandle";
 import {
   Paper,
   Table,
@@ -113,15 +113,15 @@ const ShowTeachers = () => {
     console.log(error);
   }
 
-  const deleteHandler = (deleteID, address) => {
-    console.log(deleteID);
-    console.log(address);
-    setMessage("Sorry the delete function has been disabled for now.");
-    setShowPopup(true);
-
-    // dispatch(deleteUser(deleteID, address)).then(() => {
-    //     dispatch(getAllTeachers(currentUser._id));
-    // });
+  const deleteSingleTeacherHandler = (deleteID) => {
+    dispatch(deleteTeacher(deleteID)).then(() => {
+      dispatch(getAllTeachers(currentUser._id));
+    });
+  };
+  const deleteAllTeachersHandler = () => {
+    dispatch(deleteAllTeacher(currentUser._id)).then(() => {
+      dispatch(getAllTeachers(currentUser._id));
+    });
   };
 
   const columns = [
@@ -130,15 +130,17 @@ const ShowTeachers = () => {
     { id: "teachSclass", label: "Class", minWidth: 170 },
   ];
 
-  const rows = teachersList.map((teacher) => {
-    return {
-      name: teacher.name,
-      teachSubject: teacher.teachSubject?.subName || null,
-      teachSclass: teacher.teachSclass.sclassName,
-      teachSclassID: teacher.teachSclass._id,
-      id: teacher._id,
-    };
-  });
+  const rows =
+    Array.isArray(teachersList) &&
+    teachersList.map((teacher) => {
+      return {
+        name: teacher.name,
+        teachSubject: teacher.teachSubject?.subName || null,
+        teachSclass: teacher.teachSclass.sclassName,
+        teachSclassID: teacher.teachSclass._id,
+        id: teacher._id,
+      };
+    });
 
   const actions = [
     {
@@ -149,7 +151,7 @@ const ShowTeachers = () => {
     {
       icon: <PersonRemoveIcon color="error" />,
       name: "Delete All Teachers",
-      action: () => deleteHandler(currentUser._id, "Teachers"),
+      action: () => deleteAllTeachersHandler(),
     },
   ];
 
@@ -204,70 +206,71 @@ const ShowTeachers = () => {
                 </StyledTableRow>
               </TableHead>
               <TableBody>
-                {rows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
-                    return (
-                      <StyledTableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={row.id}
-                      >
-                        {columns.map((column) => {
-                          const value = row[column.id];
-                          if (column.id === "teachSubject") {
+                {Array.isArray(rows) &&
+                  rows
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row) => {
+                      return (
+                        <StyledTableRow
+                          hover
+                          role="checkbox"
+                          tabIndex={-1}
+                          key={row.id}
+                        >
+                          {columns.map((column) => {
+                            const value = row[column.id];
+                            if (column.id === "teachSubject") {
+                              return (
+                                <StyledTableCell
+                                  key={column.id}
+                                  align={column.align}
+                                >
+                                  {value ? (
+                                    value
+                                  ) : (
+                                    <Button
+                                      variant="contained"
+                                      onClick={() => {
+                                        navigate(
+                                          `/Admin/teachers/choosesubject/${row.teachSclassID}/${row.id}`
+                                        );
+                                      }}
+                                    >
+                                      Add Subject
+                                    </Button>
+                                  )}
+                                </StyledTableCell>
+                              );
+                            }
                             return (
                               <StyledTableCell
                                 key={column.id}
                                 align={column.align}
                               >
-                                {value ? (
-                                  value
-                                ) : (
-                                  <Button
-                                    variant="contained"
-                                    onClick={() => {
-                                      navigate(
-                                        `/Admin/teachers/choosesubject/${row.teachSclassID}/${row.id}`
-                                      );
-                                    }}
-                                  >
-                                    Add Subject
-                                  </Button>
-                                )}
+                                {column.format && typeof value === "number"
+                                  ? column.format(value)
+                                  : value}
                               </StyledTableCell>
                             );
-                          }
-                          return (
-                            <StyledTableCell
-                              key={column.id}
-                              align={column.align}
+                          })}
+                          <StyledTableCell align="center">
+                            <IconButton
+                              onClick={() => deleteSingleTeacherHandler(row.id)}
                             >
-                              {column.format && typeof value === "number"
-                                ? column.format(value)
-                                : value}
-                            </StyledTableCell>
-                          );
-                        })}
-                        <StyledTableCell align="center">
-                          <IconButton
-                            onClick={() => deleteHandler(row.id, "Teacher")}
-                          >
-                            <PersonRemoveIcon color="error" />
-                          </IconButton>
-                          <BlueButton
-                            variant="contained"
-                            onClick={() =>
-                              navigate("/Admin/teachers/teacher/" + row.id)
-                            }
-                          >
-                            View
-                          </BlueButton>
-                        </StyledTableCell>
-                      </StyledTableRow>
-                    );
-                  })}
+                              <PersonRemoveIcon color="error" />
+                            </IconButton>
+                            <BlueButton
+                              variant="contained"
+                              onClick={() =>
+                                navigate("/Admin/teachers/teacher/" + row.id)
+                              }
+                            >
+                              View
+                            </BlueButton>
+                          </StyledTableCell>
+                        </StyledTableRow>
+                      );
+                    })}
               </TableBody>
             </Table>
           </TableContainer>
