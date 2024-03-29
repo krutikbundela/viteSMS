@@ -50,7 +50,7 @@ import TableChartIcon from "@mui/icons-material/TableChart";
 import TableChartOutlinedIcon from "@mui/icons-material/TableChartOutlined";
 import Popup from "../../../components/Popup";
 
-const ViewStudent = () => {
+const   ViewStudent = () => {
   const [showTab, setShowTab] = useState(false);
 
   const navigate = useNavigate();
