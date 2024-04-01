@@ -12,13 +12,14 @@ import {
   Typography,
   Divider,
 } from "@mui/material";
+import ConfirmationModal from "./ConfirmationModal";
 
 const AdminProfile = () => {
   // const { currentUser } = useSelector((state) => state.user);
 
   const [showTab, setShowTab] = useState(false);
   const buttonText = showTab ? "Cancel" : "Edit profile";
-
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { currentUser, response, error } = useSelector((state) => state.user);
@@ -45,15 +46,18 @@ const AdminProfile = () => {
     dispatch(updateUser(fields, currentUser._id, address));
   };
 
-  const deleteHandler = () => {
-    try {
-      dispatch(deleteUser(currentUser._id, "Students"));
-      dispatch(deleteUser(currentUser._id, address));
-      dispatch(authLogout());
-      navigate("/");
-    } catch (error) {
-      console.error(error);
-    }
+  const handleDeleteConfirmation = () => {
+    setShowDeleteModal(true);
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteUser(currentUser._id, address));
+    dispatch(authLogout());
+    navigate("/");
+  };
+
+  const handleCloseDeleteModal = () => {
+    setShowDeleteModal(false);
   };
 
   return (
@@ -115,9 +119,9 @@ const AdminProfile = () => {
         }}
       >
         <Button
-          variant="containe/d"
+          variant="contained"
           color="error"
-          onClick={deleteHandler}
+          onClick={handleDeleteConfirmation}
           sx={{ m: 2 }}
         >
           Delete
@@ -130,7 +134,14 @@ const AdminProfile = () => {
           {showTab ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
           {buttonText}
         </Button>
+        <ConfirmationModal
+          open={showDeleteModal}
+          handleClose={handleCloseDeleteModal}
+          handleConfirm={handleDelete}
+          message="Are you sure you want to delete your admin profile? This will lead to the loss of all student data, class data, and teacher data."
+        />
       </Box>
+
       <Collapse in={showTab} timeout="auto" unmountOnExit>
         <div className="register">
           <form className="registerForm" onSubmit={submitHandler}>
