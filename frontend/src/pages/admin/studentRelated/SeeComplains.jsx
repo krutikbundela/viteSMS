@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Paper, Box, Checkbox, Typography, Divider } from "@mui/material";
-import { getAllComplains } from "../../../redux/complainRelated/complainHandle";
+import { Paper, Box,IconButton, Typography, Divider } from "@mui/material";
+import { deleteComplain, getAllComplains } from "../../../redux/complainRelated/complainHandle";
 import TableTemplate from "../../../components/TableTemplate";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const SeeComplains = () => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
@@ -19,6 +20,12 @@ const SeeComplains = () => {
   if (error) {
     console.log(error);
   }
+
+    const deleteHandler = (deleteID, address) => {
+      dispatch(deleteComplain(deleteID, address)).then(() => {
+        dispatch(getAllComplains(currentUser._id, "Complain"));
+      });
+    };
 
   const complainColumns = [
     { id: "user", label: "User", minWidth: 170 },
@@ -46,7 +53,12 @@ const SeeComplains = () => {
   const ComplainButtonHaver = ({ row }) => {
     return (
       <>
-        <Checkbox {...label} />
+        {/* <IconButton onClick={() => navigate(`/Admin/editnotice/${row.id}`)}>
+          <EditNoteIcon color="success" />
+        </IconButton> */}
+        <IconButton onClick={() => deleteHandler(row.id, "Complain")}>
+          <DeleteIcon color="error" />
+        </IconButton>
       </>
     );
   };

@@ -67,7 +67,6 @@ const ShowNotices = () => {
     });
 
   const NoticeButtonHaver = ({ row }) => {
-    console.log("NoticeButtonHaver ~ row:", row.id);
     return (
       <>
         <IconButton onClick={() => navigate(`/Admin/editnotice/${row.id}`)}>

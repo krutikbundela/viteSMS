@@ -5,7 +5,11 @@ const router = require('express').Router();
 const { adminRegister, adminLogIn, getAdminDetail} = require('../controllers/admin-controller.js');
 
 const { sclassCreate, sclassList, deleteSclass, deleteSclasses, getSclassDetail, getSclassStudents } = require('../controllers/class-controller.js');
-const { complainCreate, complainList } = require('../controllers/complain-controller.js');
+const {
+  complainCreate,
+  complainList,
+  deleteComplain,
+} = require("../controllers/complain-controller.js");
 const { noticeCreate, noticeList, deleteAllNotices, deleteNotice, updateNotice, getSingleNotice } = require('../controllers/notice-controller.js');
 const {
     studentRegister,
@@ -82,8 +86,8 @@ router.delete("/Notice/:id", deleteNotice)
 // Complain
 
 router.post('/ComplainCreate', complainCreate);
-
 router.get('/ComplainList/:id', complainList);
+router.delete("/Complain/:id", deleteComplain)
 
 // Sclass
 

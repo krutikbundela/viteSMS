@@ -21,3 +21,17 @@ export const getAllComplains = (id, address) => async (dispatch) => {
         dispatch(getError(error));
     }
 }
+
+export const deleteComplain = (id, address) => async (dispatch) => {
+  dispatch(getRequest());
+  try {
+    const result = await axios.delete(`${REACT_APP_BASE_URL}/${address}/${id}`);
+    if (result.data.message) {
+      dispatch(getFailed(result.data.message));
+    } else {
+      dispatch(getSuccess(result.data));
+    }
+  } catch (error) {
+    dispatch(getError(error));
+  }
+};
