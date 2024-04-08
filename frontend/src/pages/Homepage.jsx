@@ -21,7 +21,17 @@ const Homepage = () => {
         >
           <img src={Students} alt="students" style={{ width: "100%" }} />
         </Grid>
-        <Grid item xs={12} md={5}>
+        <Grid
+          item
+          xs={12}
+          md={5}
+          sx={{
+            mt: "5",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <StyledPaper elevation={3}>
             <StyledTitle>
               Welcome to
@@ -74,7 +84,7 @@ export default Homepage;
 
 const StyledContainer = styled(Container)`
   width: 900px;
-  margin-top: 50px;
+  // margin-top: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -84,6 +94,10 @@ const StyledContainer = styled(Container)`
 const StyledPaper = styled.div`
   padding: 10px;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const StyledBox = styled(Box)`
@@ -108,6 +122,7 @@ const StyledTitle = styled.h1`
 
 const StyledText = styled.p`
   /* color: #550080; */
+  text-align: center;
   margin-top: 10px;
   //   margin-bottom: 30px;
   letter-spacing: normal;
