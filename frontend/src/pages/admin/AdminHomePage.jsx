@@ -1,9 +1,15 @@
-import { Container, Grid, Paper, Box } from "@mui/material";
+import {
+  Container,
+  Grid,
+  Paper,
+  Box,
+  Typography,
+  Divider,
+} from "@mui/material";
 import SeeNotice from "../../components/SeeNotice";
 import Students from "../../assets/img1.png";
 import Classes from "../../assets/img2.png";
 import Teachers from "../../assets/img3.png";
-import Fees from "../../assets/img4.png";
 import styled from "styled-components";
 import CountUp from "react-countup";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,39 +40,70 @@ const AdminHomePage = () => {
 
   return (
     <>
-      <Container maxWidth="lg" sx={{ mt: 7, mb: 4 }}>
-        <Grid container spacing={3}>
-          <Box
+      <Box
+        sx={{
+          width: "100%",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          flexDirection: "column",
+        }}
+      >
+        <Box
+          sx={{
+            m: 2,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <Typography variant="h2">{currentUser.schoolName}</Typography>
+          <Divider
+            variant="middle"
+            orientation="horizontal"
             sx={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
+              width: "90%",
+              borderBottomWidth: "5px",
+              color: "black",
             }}
-          >
-            <Grid item xs={12} md={3} lg={3}>
-              <StyledPaper>
-                <img src={Students} alt="Students" />
-                <Title>Total Students</Title>
-                <Data start={0} end={numberOfStudents} duration={2.5} />
-              </StyledPaper>
-            </Grid>
-            <Grid item xs={12} md={3} lg={3}>
-              <StyledPaper>
-                <img src={Classes} alt="Classes" />
-                <Title>Total Classes</Title>
-                <Data start={0} end={numberOfClasses} duration={5} />
-              </StyledPaper>
-            </Grid>
-            <Grid item xs={12} md={3} lg={3}>
-              <StyledPaper>
-                <img src={Teachers} alt="Teachers" />
-                <Title>Total Teachers</Title>
-                <Data start={0} end={numberOfTeachers} duration={2.5} />
-              </StyledPaper>
-            </Grid>
-          </Box>
-          {/* <Grid item xs={12} md={3} lg={3}>
+          />
+        </Box>
+
+        <Container maxWidth="lg" sx={{ mt: 7, mb: 4 }}>
+          <Grid container spacing={3}>
+            <Box
+              sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Grid item xs={12} md={3} lg={3}>
+                <StyledPaper>
+                  <img src={Students} alt="Students" />
+                  <Title>Total Students</Title>
+                  <Data start={0} end={numberOfStudents} duration={2.5} />
+                </StyledPaper>
+              </Grid>
+              <Grid item xs={12} md={3} lg={3}>
+                <StyledPaper>
+                  <img src={Classes} alt="Classes" />
+                  <Title>Total Classes</Title>
+                  <Data start={0} end={numberOfClasses} duration={5} />
+                </StyledPaper>
+              </Grid>
+              <Grid item xs={12} md={3} lg={3}>
+                <StyledPaper>
+                  <img src={Teachers} alt="Teachers" />
+                  <Title>Total Teachers</Title>
+                  <Data start={0} end={numberOfTeachers} duration={2.5} />
+                </StyledPaper>
+              </Grid>
+            </Box>
+            {/* <Grid item xs={12} md={3} lg={3}>
                         <StyledPaper>
                             <img src={Fees} alt="Fees" />
                             <Title>
@@ -74,27 +111,28 @@ const AdminHomePage = () => {
                             </Title>
                             <Data start={0} end={23000} duration={2.5} prefix="$" />                        </StyledPaper>
                     </Grid> */}
-          <Grid
-            item
-            xs={12}
-            md={12}
-            lg={12}
-            sx={{ padding: "0px !important", marginTop: "50px" }}
-          >
-            <Paper
-              sx={{
-                width: "100%",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
+            <Grid
+              item
+              xs={12}
+              md={12}
+              lg={12}
+              sx={{ padding: "0px !important", marginTop: "50px" }}
             >
-              <SeeNotice />
-            </Paper>
+              <Paper
+                sx={{
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <SeeNotice />
+              </Paper>
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
+        </Container>
+      </Box>
     </>
   );
 };
