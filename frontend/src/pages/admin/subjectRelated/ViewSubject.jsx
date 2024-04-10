@@ -95,7 +95,7 @@ const ViewSubject = () => {
         >
           View
         </BlueButton>
-        <PurpleButton variant="contained"
+        <PurpleButton sx={{ml:2}} variant="contained"
           onClick={() => navigate(`/Admin/subject/student/marks/${row.id}/${subjectID}`)}>
           Provide Marks
         </PurpleButton>
