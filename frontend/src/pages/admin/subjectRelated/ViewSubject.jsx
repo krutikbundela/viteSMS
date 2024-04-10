@@ -1,8 +1,17 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getClassStudents, getSubjectDetails } from '../../../redux/sclassRelated/sclassHandle';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Tab, Container, Typography, BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
+import {
+  Box,
+  Tab,
+  Container,
+  Typography,
+  BottomNavigation,
+  BottomNavigationAction,
+  Paper,
+  Divider,
+} from "@mui/material";
 import { BlueButton, GreenButton, PurpleButton } from '../../../components/buttonStyles';
 import TableTemplate from '../../../components/TableTemplate';
 import TabContext from '@mui/lab/TabContext';
@@ -61,10 +70,11 @@ const ViewSubject = () => {
         <BlueButton
           variant="contained"
           onClick={() => navigate("/Admin/students/student/" + row.id)}
-        >
+          >
           View
         </BlueButton>
         <PurpleButton
+        sx={{ml:2}}
           variant="contained"
           onClick={() =>
             navigate(`/Admin/subject/student/attendance/${row.id}/${subjectID}`)
@@ -96,49 +106,126 @@ const ViewSubject = () => {
   const SubjectStudentsSection = () => {
     return (
       <>
-        {getresponse ? (
-          <>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
-              <GreenButton
-                variant="contained"
-                onClick={() => navigate("/Admin/class/addstudents/" + classID)}
+        <Box
+          sx={{
+            width: "100%",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <Box
+            sx={{
+              m: 2,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Typography variant="h2">Students List</Typography>
+            <Divider
+              variant="middle"
+              orientation="horizontal"
+              sx={{
+                width: "90%",
+                borderBottomWidth: "5px",
+                color: "black",
+              }}
+            />
+          </Box>
+          {getresponse ? (
+            <>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  marginTop: "16px",
+                }}
               >
-                Add Students
-              </GreenButton>
-            </Box>
-          </>
-        ) : (
-          <>
-            <Typography variant="h5" gutterBottom>
-              Students List:
-            </Typography>
-
-            {selectedSection === 'attendance' &&
-              <TableTemplate buttonHaver={StudentsAttendanceButtonHaver} columns={studentColumns} rows={studentRows} />
-            }
-            {selectedSection === 'marks' &&
-              <TableTemplate buttonHaver={StudentsMarksButtonHaver} columns={studentColumns} rows={studentRows} />
-            }
-
-            <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-              <BottomNavigation value={selectedSection} onChange={handleSectionChange} showLabels>
-                <BottomNavigationAction
-                  label="Attendance"
-                  value="attendance"
-                  icon={selectedSection === 'attendance' ? <TableChartIcon /> : <TableChartOutlinedIcon />}
+                <GreenButton
+                  variant="contained"
+                  onClick={() =>
+                    navigate("/Admin/class/addstudents/" + classID)
+                  }
+                >
+                  Add Students
+                </GreenButton>
+                <Paper
+                  sx={{
+                    margin: "50px",
+                    width: "90%",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "20px",
+                  }}
+                >
+                  <h3>No Marks Added </h3>
+                </Paper>
+              </Box>
+             
+            </>
+          ) : (
+            <>
+              {selectedSection === "attendance" && (
+                <TableTemplate
+                  buttonHaver={StudentsAttendanceButtonHaver}
+                  columns={studentColumns}
+                  rows={studentRows}
                 />
-                <BottomNavigationAction
-                  label="Marks"
-                  value="marks"
-                  icon={selectedSection === 'marks' ? <InsertChartIcon /> : <InsertChartOutlinedIcon />}
+              )}
+              {selectedSection === "marks" && (
+                <TableTemplate
+                  buttonHaver={StudentsMarksButtonHaver}
+                  columns={studentColumns}
+                  rows={studentRows}
                 />
-              </BottomNavigation>
-            </Paper>
+              )}
 
-          </>
-        )}
+              <Paper
+                sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
+                elevation={3}
+              >
+                <BottomNavigation
+                  value={selectedSection}
+                  onChange={handleSectionChange}
+                  showLabels
+                >
+                  <BottomNavigationAction
+                    label="Attendance"
+                    value="attendance"
+                    icon={
+                      selectedSection === "attendance" ? (
+                        <TableChartIcon />
+                      ) : (
+                        <TableChartOutlinedIcon />
+                      )
+                    }
+                  />
+                  <BottomNavigationAction
+                    label="Marks"
+                    value="marks"
+                    icon={
+                      selectedSection === "marks" ? (
+                        <InsertChartIcon />
+                      ) : (
+                        <InsertChartOutlinedIcon />
+                      )
+                    }
+                  />
+                </BottomNavigation>
+              </Paper>
+            </>
+          )}
+        </Box>
       </>
-    )
+    );
   }
 
   const SubjectDetailsSection = () => {
@@ -146,34 +233,81 @@ const ViewSubject = () => {
 
     return (
       <>
-        <Typography variant="h4" align="center" gutterBottom>
-          Subject Details
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          Subject Name : {subjectDetails && subjectDetails.subName}
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          Subject Code : {subjectDetails && subjectDetails.subCode}
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          Subject Sessions : {subjectDetails && subjectDetails.sessions}
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          Number of Students: {numberOfStudents}
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          Class Name : {subjectDetails && subjectDetails.sclassName && subjectDetails.sclassName.sclassName}
-        </Typography>
-        {subjectDetails && subjectDetails.teacher ?
+        <Box
+          sx={{
+            width: "100%",
+            height: "100vh",
+            display: "flex",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
+          <Box
+            sx={{
+              m: 2,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            <Typography variant="h2"> Subject Details</Typography>
+            <Divider
+              variant="middle"
+              orientation="horizontal"
+              sx={{
+                width: "90%",
+                borderBottomWidth: "5px",
+                color: "black",
+              }}
+            />
+          </Box>
+                  <Paper
+          sx={{
+            padding: 2,
+            marginTop: "20px",
+            width: "50%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "column",
+          }}
+        >
           <Typography variant="h6" gutterBottom>
-            Teacher Name : {subjectDetails.teacher.name}
+            Subject Name : {subjectDetails && subjectDetails.subName}
           </Typography>
-          :
-          <GreenButton variant="contained"
-            onClick={() => navigate("/Admin/teachers/addteacher/" + subjectDetails._id)}>
-            Add Subject Teacher
-          </GreenButton>
-        }
+          <Typography variant="h6" gutterBottom>
+            Subject Code : {subjectDetails && subjectDetails.subCode}
+          </Typography>
+          <Typography variant="h6" gutterBottom>
+            Subject Sessions : {subjectDetails && subjectDetails.sessions}
+          </Typography>
+          <Typography variant="h6" gutterBottom>
+            Number of Students: {numberOfStudents}
+          </Typography>
+          <Typography variant="h6" gutterBottom>
+            Class Name :{" "}
+            {subjectDetails &&
+              subjectDetails.sclassName &&
+              subjectDetails.sclassName.sclassName}
+          </Typography>
+          {subjectDetails && subjectDetails.teacher ? (
+            <Typography sx={{mb:2}} variant="h6" gutterBottom>
+              Teacher Name : {subjectDetails.teacher.name}
+            </Typography>
+          ) : (
+            <GreenButton
+            variant="contained"
+            onClick={() =>
+              navigate("/Admin/teachers/addteacher/" + subjectDetails._id)
+            }
+            >
+              Add Subject Teacher
+            </GreenButton>
+          )}
+          </Paper>
+        </Box>
       </>
     );
   }

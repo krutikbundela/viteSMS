@@ -733,13 +733,13 @@ const   ViewStudent = () => {
           {subjectAttendance &&
             Array.isArray(subjectAttendance) &&
             subjectAttendance.length > 0 && <CustomPieChart data={chartData} />}
-          <Button
+          {/* <Button
             variant="contained"
             sx={styles.styledButton}
             onClick={deleteHandler}
           >
             Delete
-          </Button>
+          </Button> */}
           {/* <Button
                 variant="containe/d"
                 color="error"
