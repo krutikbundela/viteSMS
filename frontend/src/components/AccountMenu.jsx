@@ -48,27 +48,21 @@ const AccountMenu = () => {
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
+                    <Link sx={{width:"100px"}} to={`/${currentRole}/profile`}>
                 <MenuItem>
                     <Avatar />
-                    <Link to={`/${currentRole}/profile`}>
                         Profile
+                </MenuItem>
                     </Link>
-                </MenuItem>
                 <Divider />
-                <MenuItem onClick={handleClose}>
-                    <ListItemIcon>
-                        <Settings fontSize="small" />
-                    </ListItemIcon>
-                    Settings
-                </MenuItem>
+                    <Link to="/logout">
                 <MenuItem>
                     <ListItemIcon>
                         <Logout fontSize="small" />
                     </ListItemIcon>
-                    <Link to="/logout">
                         Logout
-                    </Link>
                 </MenuItem>
+                    </Link>
             </Menu>
         </>
     );
