@@ -98,120 +98,163 @@ const StudentSubjects = () => {
 
   const renderClassDetailsSection = () => {
     return (
-      <Container>
-        <Typography variant="h4" align="center" gutterBottom>
-          Class Details
-        </Typography>
-        <Typography variant="h5" gutterBottom>
-          You are currently in Class {sclassDetails && sclassDetails.sclassName}
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          And these are the subjects:
-        </Typography>
-        {subjectsList &&
-          subjectsList.map((subject, index) => (
-            <div key={index}>
-              <Typography variant="subtitle1">
-                {subject.subName} ({subject.subCode})
-              </Typography>
-            </div>
-          ))}
-      </Container>
-    );
-  };
-
-  return (
-    <>
-      <Box
-        sx={{
-          width: "100%",
-          // height: "110vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-        }}
-      >
+      <>
         <Box
           sx={{
-            width: "fit-content",
-            m: 2,
+            width: "100%",
+            // height: "110vh",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             flexDirection: "column",
           }}
         >
-          <Typography variant="h2">Subject & Marks</Typography>
-          <Divider
-            variant="middle"
-            orientation="horizontal"
+          <Box
             sx={{
-              width: "90%",
-              borderBottomWidth: "5px",
-              color: "black",
+              width: "fit-content",
+              m: 2,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
             }}
-          />
+          >
+            <Typography variant="h2">Subject & Marks</Typography>
+            <Divider
+              variant="middle"
+              orientation="horizontal"
+              sx={{
+                width: "90%",
+                borderBottomWidth: "5px",
+                color: "black",
+              }}
+            />
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+              marginTop: "16px",
+            }}
+          >
+            <Paper
+              sx={{
+                margin: "50px",
+                width: "90%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: "20px",
+              }}
+            >
+              <h3>Currently you have no Subject & Marks details</h3>
+            </Paper>
+          </Box>
         </Box>
-      </Box>
+      </>
+    );
+  };
+  console.log("renderClassDetailsSection ~ currentUser:", currentUser);
+            // console.log("renderClassDetailsSection ~ subjectsList:", subjectsList);
+  
+  // console.log("renderClassDetailsSection ~ sclassDetails:", sclassDetails);
+  return (
+    <>
       {loading ? (
         <Loader />
       ) : (
-        <Box
-          sx={{
-            height: selectedSection === "table" ? "fit-content" : "100vh",
-            mt: 5,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexDirection: "column",
-          }}
-        >
-          {subjectMarks &&
-          Array.isArray(subjectMarks) &&
-          subjectMarks.length > 0 ? (
-            <>
-              {selectedSection === "table" && renderTableSection()}
-              {selectedSection === "chart" && renderChartSection()}
-
-              <Paper
-                sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
-                elevation={3}
-              >
-                <BottomNavigation
-                  value={selectedSection}
-                  onChange={handleSectionChange}
-                  showLabels
+        <>
+          <Box
+            sx={{
+              height: selectedSection === "table" ? "fit-content" : "100vh",
+              mt: 5,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
+          >
+            {subjectMarks &&
+            Array.isArray(subjectMarks) &&
+            subjectMarks.length > 0 ? (
+              <>
+                <Box
+                  sx={{
+                    width: "100%",
+                    // height: "110vh",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    flexDirection: "column",
+                  }}
                 >
-                  <BottomNavigationAction
-                    label="Table"
-                    value="table"
-                    icon={
-                      selectedSection === "table" ? (
-                        <TableChartIcon />
-                      ) : (
-                        <TableChartOutlinedIcon />
-                      )
-                    }
-                  />
-                  <BottomNavigationAction
-                    label="Chart"
-                    value="chart"
-                    icon={
-                      selectedSection === "chart" ? (
-                        <InsertChartIcon />
-                      ) : (
-                        <InsertChartOutlinedIcon />
-                      )
-                    }
-                  />
-                </BottomNavigation>
-              </Paper>
-            </>
-          ) : (
-            <>{renderClassDetailsSection()}</>
-          )}
-        </Box>
+                  <Box
+                    sx={{
+                      width: "fit-content",
+                      m: 2,
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <Typography variant="h2">Subjects & Marks</Typography>
+                    <Divider
+                      variant="middle"
+                      orientation="horizontal"
+                      sx={{
+                        width: "90%",
+                        borderBottomWidth: "5px",
+                        color: "black",
+                      }}
+                    />
+                  </Box>
+                </Box>
+                {selectedSection === "table" && renderTableSection()}
+                {selectedSection === "chart" && renderChartSection()}
+
+                <Paper
+                  sx={{ position: "fixed", bottom: 0, left: 0, right: 0 }}
+                  elevation={3}
+                >
+                  <BottomNavigation
+                    value={selectedSection}
+                    onChange={handleSectionChange}
+                    showLabels
+                  >
+                    <BottomNavigationAction
+                      label="Table"
+                      value="table"
+                      icon={
+                        selectedSection === "table" ? (
+                          <TableChartIcon />
+                        ) : (
+                          <TableChartOutlinedIcon />
+                        )
+                      }
+                    />
+                    <BottomNavigationAction
+                      label="Chart"
+                      value="chart"
+                      icon={
+                        selectedSection === "chart" ? (
+                          <InsertChartIcon />
+                        ) : (
+                          <InsertChartOutlinedIcon />
+                        )
+                      }
+                    />
+                  </BottomNavigation>
+                </Paper>
+              </>
+            ) : (
+              <>{renderClassDetailsSection()}</>
+            )}
+          </Box>
+        </>
       )}
     </>
   );

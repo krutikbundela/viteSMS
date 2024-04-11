@@ -300,9 +300,29 @@ const ViewStdAttendance = () => {
             </>
           ) : (
             <>
-              <Typography variant="h6" gutterBottom component="div">
-                Currently You Have No Attendance Details
-              </Typography>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  flexDirection: "column",
+                  marginTop: "16px",
+                }}
+              >
+                <Paper
+                  sx={{
+                    margin: "50px",
+                    width: "90%",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    padding: "20px",
+                  }}
+                >
+                  <h3>Currently you have no attendence details</h3>
+                </Paper>
+              </Box>
             </>
           )}
         </Box>

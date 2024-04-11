@@ -61,13 +61,13 @@ const StudentProfile = () => {
         <Container maxWidth="md" sx={{mt:10}}>
           <StyledPaper elevation={3}>
             <Grid container spacing={2}>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <Box display="flex" justifyContent="center">
                   <Avatar alt="Student Avatar" sx={{ width: 150, height: 150 }}>
                     {String(currentUser.name).charAt(0)}
                   </Avatar>
                 </Box>
-              </Grid>
+              </Grid> */}
               <Grid item xs={12}>
                 <Box display="flex" justifyContent="center">
                   <Typography variant="h5" component="h2" textAlign="center">
