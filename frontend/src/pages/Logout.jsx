@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { authLogout } from '../redux/userRelated/userSlice';
@@ -32,6 +31,9 @@ const Logout = () => {
 export default Logout;
 
 const LogoutContainer = styled.div`
+margin:auto;
+margin-top: 10%;
+width: 50%;
   border: 1px solid #ccc;
   border-radius: 10px;
   padding: 20px;
