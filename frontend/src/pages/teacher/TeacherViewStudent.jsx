@@ -22,6 +22,7 @@ import {
 import CustomPieChart from "../../components/CustomPieChart";
 import { PurpleButton } from "../../components/buttonStyles";
 import { StyledTableCell, StyledTableRow } from "../../components/styles";
+import Loader from "../../components/Loader";
 
 const TeacherViewStudent = () => {
   const navigate = useNavigate();
@@ -111,7 +112,7 @@ const TeacherViewStudent = () => {
         </Box>
         {loading ? (
           <>
-            <div>Loading...</div>
+            <Loader />
           </>
         ) : (
           <>

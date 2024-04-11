@@ -17,6 +17,7 @@ import CountUp from "react-countup";
 import Subject from "../../assets/subjects.svg";
 import Assignment from "../../assets/assignment.svg";
 import { getSubjectList } from "../../redux/sclassRelated/sclassHandle";
+import Loader from "../../components/Loader";
 
 const StudentHomePage = () => {
   const dispatch = useDispatch();
@@ -122,7 +123,7 @@ const StudentHomePage = () => {
           ) : (
             <>
               {loading ? (
-                <Typography variant="h6">Loading...</Typography>
+                <Loader />
               ) : (
                 <>
                   <Box

@@ -4,6 +4,7 @@ import { Paper, Box,IconButton, Typography, Divider } from "@mui/material";
 import { deleteComplain, getAllComplains } from "../../../redux/complainRelated/complainHandle";
 import TableTemplate from "../../../components/TableTemplate";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Loader from "../../../components/Loader";
 
 const SeeComplains = () => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
@@ -96,7 +97,7 @@ const SeeComplains = () => {
           />
         </Box>
         {loading ? (
-          <div>Loading...</div>
+          <Loader />
         ) : (
           <>
             {response ? (

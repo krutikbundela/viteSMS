@@ -22,6 +22,7 @@ import { BlueButton, GreenButton } from "../../../components/buttonStyles";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import SpeedDialTemplate from "../../../components/SpeedDialTemplate";
 import Popup from "../../../components/Popup";
+import Loader from "../../../components/Loader";
 
 const ShowTeachers = () => {
   const [page, setPage] = useState(0);
@@ -42,7 +43,7 @@ const ShowTeachers = () => {
   const [message, setMessage] = useState("");
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader />;
   } else if (response) {
     return (
       <Box

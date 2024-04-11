@@ -9,6 +9,7 @@ import {
   Button,
   Typography,
 } from "@mui/material";
+import Loader from "../../../components/Loader";
 
 const TeacherDetails = () => {
   const navigate = useNavigate();
@@ -69,7 +70,7 @@ const TeacherDetails = () => {
           />
         </Box>
         {loading ? (
-          <div>Loading...</div>
+          <Loader />
         ) : (
           // <Container>
           <Paper

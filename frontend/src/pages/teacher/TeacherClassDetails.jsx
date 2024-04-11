@@ -19,6 +19,7 @@ import {
 import { BlackButton, BlueButton } from "../../components/buttonStyles";
 import TableTemplate from "../../components/TableTemplate";
 import { KeyboardArrowDown, KeyboardArrowUp } from "@mui/icons-material";
+import Loader from "../../components/Loader";
 
 const TeacherClassDetails = () => {
   const navigate = useNavigate();
@@ -192,7 +193,7 @@ const TeacherClassDetails = () => {
           />
         </Box>
         {loading ? (
-          <div>Loading...</div>
+          <Loader />
         ) : (
           <>
             {getresponse ? (

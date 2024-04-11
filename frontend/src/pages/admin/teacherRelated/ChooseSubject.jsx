@@ -15,6 +15,7 @@ import { getTeacherFreeClassSubjects } from "../../../redux/sclassRelated/sclass
 import { updateTeachSubject } from "../../../redux/teacherRelated/teacherHandle";
 import { GreenButton, PurpleButton } from "../../../components/buttonStyles";
 import { StyledTableCell, StyledTableRow } from "../../../components/styles";
+import Loader from "../../../components/Loader";
 
 const ChooseSubject = ({ situation }) => {
   const params = useParams();
@@ -43,7 +44,7 @@ const ChooseSubject = ({ situation }) => {
   }, [situation]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loader/>;
   } else if (response) {
     return (
       <div>

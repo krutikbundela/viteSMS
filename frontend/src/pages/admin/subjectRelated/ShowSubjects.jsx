@@ -11,6 +11,7 @@ import { BlueButton, GreenButton } from "../../../components/buttonStyles";
 import SpeedDialTemplate from "../../../components/SpeedDialTemplate";
 import Popup from "../../../components/Popup";
 import { deleteAllSubject, deleteSubject } from "../../../redux/subjectRelated/subjectHandle";
+import Loader from "../../../components/Loader";
 
 const ShowSubjects = () => {
   const navigate = useNavigate();
@@ -124,7 +125,7 @@ const ShowSubjects = () => {
           />
         </Box>
         {loading ? (
-          <div>Loading...</div>
+          <Loader />
         ) : (
           <>
             {response ? (

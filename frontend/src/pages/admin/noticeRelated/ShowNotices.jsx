@@ -14,6 +14,7 @@ import TableTemplate from "../../../components/TableTemplate";
 import { GreenButton } from "../../../components/buttonStyles";
 import SpeedDialTemplate from "../../../components/SpeedDialTemplate";
 import EditNoteIcon from "@mui/icons-material/EditNote";
+import Loader from "../../../components/Loader";
 
 const ShowNotices = () => {
   const navigate = useNavigate();
@@ -125,7 +126,7 @@ const ShowNotices = () => {
           />
         </Box>
         {loading ? (
-          <div>Loading...</div>
+          <Loader />
         ) : (
           <>
             {response ? (

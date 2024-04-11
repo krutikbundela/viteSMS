@@ -22,6 +22,7 @@ import InsertChartIcon from '@mui/icons-material/InsertChart';
 import InsertChartOutlinedIcon from '@mui/icons-material/InsertChartOutlined';
 import TableChartIcon from '@mui/icons-material/TableChart';
 import TableChartOutlinedIcon from '@mui/icons-material/TableChartOutlined';
+import Loader from '../../../components/Loader';
 
 const ViewSubject = () => {
   const navigate = useNavigate()
@@ -314,14 +315,22 @@ const ViewSubject = () => {
 
   return (
     <>
-      {subloading ?
-        < div > Loading...</div >
-        :
+      {subloading ? (
+        <Loader />
+      ) : (
         <>
-          <Box sx={{ width: '100%', typography: 'body1', }} >
+          <Box sx={{ width: "100%", typography: "body1" }}>
             <TabContext value={value}>
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <TabList onChange={handleChange} sx={{ position: 'fixed', width: '100%', bgcolor: 'background.paper', zIndex: 1 }}>
+              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+                <TabList
+                  onChange={handleChange}
+                  sx={{
+                    position: "fixed",
+                    width: "100%",
+                    bgcolor: "background.paper",
+                    zIndex: 1,
+                  }}
+                >
                   <Tab label="Details" value="1" />
                   <Tab label="Students" value="2" />
                 </TabList>
@@ -337,9 +346,9 @@ const ViewSubject = () => {
             </TabContext>
           </Box>
         </>
-      }
+      )}
     </>
-  )
+  );
 }
 
 export default ViewSubject

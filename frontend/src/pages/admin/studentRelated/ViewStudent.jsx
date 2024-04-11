@@ -49,6 +49,7 @@ import InsertChartOutlinedIcon from "@mui/icons-material/InsertChartOutlined";
 import TableChartIcon from "@mui/icons-material/TableChart";
 import TableChartOutlinedIcon from "@mui/icons-material/TableChartOutlined";
 import Popup from "../../../components/Popup";
+import Loader from "../../../components/Loader";
 
 const   ViewStudent = () => {
   const [showTab, setShowTab] = useState(false);
@@ -818,7 +819,7 @@ const   ViewStudent = () => {
     <>
       {loading ? (
         <>
-          <div>Loading...</div>
+          <Loader />
         </>
       ) : (
         <>

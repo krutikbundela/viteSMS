@@ -29,6 +29,7 @@ import Popper from "@mui/material/Popper";
 import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import Popup from "../../../components/Popup";
+import Loader from "../../../components/Loader";
 
 const ShowStudents = () => {
   const navigate = useNavigate();
@@ -238,7 +239,7 @@ const ShowStudents = () => {
           />
         </Box>
         {loading ? (
-          <div>Loading...</div>
+          <Loader />
         ) : (
           <>
             {response ? (

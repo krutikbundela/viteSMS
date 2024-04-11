@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllNotices } from "../redux/noticeRelated/noticeHandle";
 import { Paper, Box, Typography, Divider } from "@mui/material";
 import TableViewTemplate from "./TableViewTemplate";
+import Loader from "./Loader";
 
 const SeeNotice = () => {
   const dispatch = useDispatch();
@@ -75,7 +76,7 @@ const SeeNotice = () => {
         />
       </Box>
       {loading ? (
-        <div style={{ fontSize: "20px" }}>Loading...</div>
+        <Loader/>
       ) : response ? (
         <div style={{ fontSize: "30px" }}>No Notices to Show Right Now</div>
       ) : (

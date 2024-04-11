@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { PurpleButton } from "../../../components/buttonStyles";
 import TableTemplate from "../../../components/TableTemplate";
 import { BlueButton, GreenButton } from "../../../components/buttonStyles";
+import Loader from "../../../components/Loader";
 const ChooseClass = ({ situation }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -89,7 +90,7 @@ const ChooseClass = ({ situation }) => {
           />
         </Box>
         {loading ? (
-          <div>Loading...</div>
+          <Loader />
         ) : (
           <>
             {getresponse ? (

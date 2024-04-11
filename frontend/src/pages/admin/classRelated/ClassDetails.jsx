@@ -45,6 +45,7 @@ import Teachers from "../../../assets/img3.png";
 import { deleteSubject } from "../../../redux/subjectRelated/subjectHandle";
 import { deleteStudent } from "../../../redux/studentRelated/studentHandle";
 import { deleteTeacher } from "../../../redux/teacherRelated/teacherHandle";
+import Loader from "../../../components/Loader";
 const ClassDetails = () => {
   const params = useParams();
   const navigate = useNavigate();
@@ -666,7 +667,7 @@ const ClassDetails = () => {
   return (
     <>
       {loading ? (
-        <div>Loading...</div>
+        <Loader/>
       ) : (
         <>
           <Box sx={{ width: "100%", typography: "body1" }}>

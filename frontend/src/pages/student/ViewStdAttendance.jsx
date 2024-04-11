@@ -28,6 +28,7 @@ import InsertChartOutlinedIcon from "@mui/icons-material/InsertChartOutlined";
 import TableChartIcon from "@mui/icons-material/TableChart";
 import TableChartOutlinedIcon from "@mui/icons-material/TableChartOutlined";
 import { StyledTableCell, StyledTableRow } from "../../components/styles";
+import Loader from "../../components/Loader";
 
 const ViewStdAttendance = () => {
   const dispatch = useDispatch();
@@ -244,7 +245,7 @@ const ViewStdAttendance = () => {
         </Box>
       </Box>
       {loading ? (
-        <div>Loading...</div>
+        <Loader />
       ) : (
         <Box
           sx={{
