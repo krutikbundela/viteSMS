@@ -498,7 +498,7 @@ const ClassDetails = () => {
                 <GreenButton
                   variant="contained"
                   onClick={() =>
-                    navigate("/Admin/teachers/addteacher/" + classID)
+                    navigate("/Admin/teachers/choosesubject/" + classID)
                   }
                   sx={{
                     width: "fit-content",
