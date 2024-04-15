@@ -12,19 +12,7 @@ const Homepage = () => {
         <Grid
           item
           xs={12}
-          md={7}
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <img src={Students} alt="students" style={{ width: "100%" }} />
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          md={5}
+          md={12}
           sx={{
             mt: "5",
             display: "flex",
@@ -36,7 +24,7 @@ const Homepage = () => {
             <StyledTitle>
               Welcome to
               <br />
-              School Management
+              <span style={{ color: "#7F56DA" }}>School Management</span>
               <br />
               System
             </StyledTitle>
@@ -75,6 +63,18 @@ const Homepage = () => {
             </StyledBox>
           </StyledPaper>
         </Grid>
+        <Grid
+          item
+          xs={12}
+          md={12}
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <img src={Students} alt="students" style={{ width: "100%" }} />
+        </Grid>
       </Grid>
     </StyledContainer>
   );
@@ -93,7 +93,7 @@ const StyledContainer = styled(Container)`
 
 const StyledPaper = styled.div`
   padding: 10px;
-  height: 100vh;
+  height: 50vh;
   display: flex;
   flex-direction: column;
   align-items: center;
